@@ -1,12 +1,12 @@
 {
-  "name": "薪序 · 我的薪资与水族馆",
-  "short_name": "薪序",
-  "description": "个人薪资记录与水族馆目标",
+  "name": "牛马费",
+  "short_name": "牛马费",
+  "description": "记录牛马费收入与产品目标",
   "lang": "zh-CN",
   "start_url": "./薪序-薪资管理.html",
   "scope": "./",
   "display": "standalone",
   "orientation": "portrait-primary",
-  "background_color": "#f5f6f2",
-  "theme_color": "#f5f6f2"
+  "background_color": "#c8e8ff",
+  "theme_color": "#c8e8ff"
 }
