@@ -53,7 +53,9 @@ jobs:
       - name: Launch app and capture screen
         run: |
           APP_PATH="$RUNNER_TEMP/DerivedData/Build/Products/Debug-iphonesimulator/XinXu.app"
-          mkdir -p artifacts
+          mkdir -p "$APP_PATH/Resources" artifacts
+          cp ios/Resources/* "$APP_PATH/Resources/"
+          find "$APP_PATH" -maxdepth 2 -name "*.html" -print
           xcrun simctl status_bar "$DEVICE_ID" override --time "9:41" --dataNetwork wifi --wifiMode active --wifiBars 3 --cellularMode active --cellularBars 4 --batteryState charged --batteryLevel 100
           xcrun simctl install "$DEVICE_ID" "$APP_PATH"
           xcrun simctl launch "$DEVICE_ID" com.momentlose.xinxu
