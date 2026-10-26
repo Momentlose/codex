@@ -25,6 +25,14 @@ jobs:
       - name: Install XcodeGen
         run: brew install xcodegen
 
+      - name: Prepare bundled web app
+        run: |
+          mkdir -p ios/Resources
+          cp "薪序-薪资管理.html" ios/Resources/
+          cp cloud-sync.js ios/Resources/
+          cp manifest.webmanifest ios/Resources/
+          cp service-worker.js ios/Resources/
+
       - name: Generate Xcode project
         run: xcodegen generate --spec ios/project.yml --project ios
 
