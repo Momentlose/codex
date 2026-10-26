@@ -22,6 +22,7 @@ targets:
         SWIFT_VERSION: "5.0"
         CODE_SIGNING_ALLOWED: NO
     info:
+      path: ios/Info.plist
       properties:
         UISupportedInterfaceOrientations:
           - UIInterfaceOrientationPortrait
