@@ -56,6 +56,7 @@ jobs:
           mkdir -p "$APP_PATH/Resources" artifacts
           cp ios/Resources/* "$APP_PATH/Resources/"
           find "$APP_PATH" -maxdepth 2 -name "*.html" -print
+          /usr/libexec/PlistBuddy -c "Set :CFBundleIdentifier com.momentlose.xinxu" "$APP_PATH/Info.plist" || /usr/libexec/PlistBuddy -c "Add :CFBundleIdentifier string com.momentlose.xinxu" "$APP_PATH/Info.plist"
           /usr/libexec/PlistBuddy -c "Print :CFBundleIdentifier" "$APP_PATH/Info.plist"
           xcrun simctl status_bar "$DEVICE_ID" override --time "9:41" --dataNetwork wifi --wifiMode active --wifiBars 3 --cellularMode active --cellularBars 4 --batteryState charged --batteryLevel 100
           xcrun simctl install "$DEVICE_ID" "$APP_PATH"
