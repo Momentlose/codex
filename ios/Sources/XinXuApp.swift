@@ -21,14 +21,18 @@ private struct XinXuWebView: UIViewRepresentable {
         webView.backgroundColor = UIColor(red: 200 / 255, green: 232 / 255, blue: 255 / 255, alpha: 1)
         webView.scrollView.contentInsetAdjustmentBehavior = .never
 
-        if let page = Bundle.main.url(forResource: "薪序-薪资管理", withExtension: "html"),
-           let resources = Bundle.main.resourceURL {
+        let pageName = "薪序-薪资管理"
+        let page = Bundle.main.url(forResource: pageName, withExtension: "html", subdirectory: "Resources")
+            ?? Bundle.main.url(forResource: pageName, withExtension: "html")
+        if let page, let resources = Bundle.main.resourceURL {
             webView.loadFileURL(page, allowingReadAccessTo: resources)
         } else {
-            webView.loadHTMLString(
-                "<meta name=\"viewport\" content=\"width=device-width,initial-scale=1\"><p style=\"font:16px -apple-system;text-align:center;margin-top:30vh\">找不到薪序页面资源</p>",
-                baseURL: nil
-            )
+            let message = """
+            <meta name="viewport" content="width=device-width,initial-scale=1">
+            <body style="margin:0;min-height:100vh;display:grid;place-items:center;background:#c8e8ff;color:#20344a;font:18px -apple-system">
+            <p>找不到薪序页面资源</p></body>
+            """
+            webView.loadHTMLString(message, baseURL: nil)
         }
         return webView
     }
