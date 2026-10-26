@@ -14,6 +14,7 @@ targets:
       base:
         PRODUCT_BUNDLE_IDENTIFIER: com.momentlose.xinxu
         PRODUCT_NAME: XinXu
+        INFOPLIST_KEY_CFBundleIdentifier: com.momentlose.xinxu
         INFOPLIST_KEY_CFBundleDisplayName: 薪序
         GENERATE_INFOPLIST_FILE: YES
         IPHONEOS_DEPLOYMENT_TARGET: "16.0"
@@ -23,6 +24,8 @@ targets:
     info:
       path: ios/Info.plist
       properties:
+        CFBundleIdentifier: com.momentlose.xinxu
+        CFBundlePackageType: APPL
         UISupportedInterfaceOrientations:
           - UIInterfaceOrientationPortrait
           - UIInterfaceOrientationLandscapeLeft
