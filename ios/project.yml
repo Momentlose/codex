@@ -1,0 +1,32 @@
+name: XinXu
+options:
+  bundleIdPrefix: com.momentlose
+  deploymentTarget:
+    iOS: "16.0"
+targets:
+  XinXu:
+    type: application
+    platform: iOS
+    sources:
+      - path: Sources
+    resources:
+      - path: ../薪序-薪资管理.html
+      - path: ../cloud-sync.js
+      - path: ../manifest.webmanifest
+      - path: ../service-worker.js
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.momentlose.xinxu
+        PRODUCT_NAME: XinXu
+        INFOPLIST_KEY_CFBundleDisplayName: 薪序
+        GENERATE_INFOPLIST_FILE: YES
+        IPHONEOS_DEPLOYMENT_TARGET: "16.0"
+        TARGETED_DEVICE_FAMILY: "1"
+        SWIFT_VERSION: "5.0"
+        CODE_SIGNING_ALLOWED: NO
+    info:
+      properties:
+        UISupportedInterfaceOrientations:
+          - UIInterfaceOrientationPortrait
+          - UIInterfaceOrientationLandscapeLeft
+          - UIInterfaceOrientationLandscapeRight
