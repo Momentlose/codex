@@ -10,10 +10,7 @@ targets:
     sources:
       - path: Sources
     resources:
-      - path: ../薪序-薪资管理.html
-      - path: ../cloud-sync.js
-      - path: ../manifest.webmanifest
-      - path: ../service-worker.js
+      - path: Resources
     settings:
       base:
         PRODUCT_BUNDLE_IDENTIFIER: com.momentlose.xinxu
