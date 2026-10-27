@@ -1,0 +1,73 @@
+name: iOS Simulator Preview
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - ios-simulator-preview
+
+permissions:
+  contents: read
+
+jobs:
+  build-and-preview:
+    runs-on: macos-latest
+    timeout-minutes: 30
+    steps:
+      - name: Check out source
+        uses: actions/checkout@v4
+
+      - name: Select Xcode
+        run: |
+          xcode-select -p
+          xcodebuild -version
+
+      - name: Install XcodeGen
+        run: brew install xcodegen
+
+      - name: Prepare bundled web app
+        run: |
+          mkdir -p ios/Resources
+          cp "薪序-薪资管理.html" ios/Resources/
+          cp cloud-sync.js ios/Resources/
+          cp manifest.webmanifest ios/Resources/
+          cp service-worker.js ios/Resources/
+
+      - name: Generate Xcode project
+        run: xcodegen generate --spec ios/project.yml --project ios
+
+      - name: Build for iOS Simulator
+        run: |
+          DEVICE_ID="$(xcrun simctl list devices available -j | python3 -c 'import json,sys; data=json.load(sys.stdin); print(next(d["udid"] for group in data["devices"].values() for d in group if d["isAvailable"] and d["name"].startswith("iPhone")))')"
+          echo "DEVICE_ID=$DEVICE_ID" >> "$GITHUB_ENV"
+          xcrun simctl boot "$DEVICE_ID"
+          xcrun simctl bootstatus "$DEVICE_ID" -b
+          xcodebuild \
+            -project ios/XinXu.xcodeproj \
+            -scheme XinXu \
+            -configuration Debug \
+            -destination "platform=iOS Simulator,id=$DEVICE_ID" \
+            -derivedDataPath "$RUNNER_TEMP/DerivedData" \
+            CODE_SIGNING_ALLOWED=NO build
+
+      - name: Launch app and capture screen
+        run: |
+          APP_PATH="$RUNNER_TEMP/DerivedData/Build/Products/Debug-iphonesimulator/XinXu.app"
+          mkdir -p "$APP_PATH/Resources" artifacts
+          cp ios/Resources/* "$APP_PATH/Resources/"
+          find "$APP_PATH" -maxdepth 2 -name "*.html" -print
+          /usr/libexec/PlistBuddy -c "Set :CFBundleIdentifier com.momentlose.xinxu" "$APP_PATH/Info.plist" || /usr/libexec/PlistBuddy -c "Add :CFBundleIdentifier string com.momentlose.xinxu" "$APP_PATH/Info.plist"
+          /usr/libexec/PlistBuddy -c "Print :CFBundleIdentifier" "$APP_PATH/Info.plist"
+          xcrun simctl status_bar "$DEVICE_ID" override --time "9:41" --dataNetwork wifi --wifiMode active --wifiBars 3 --cellularMode active --cellularBars 4 --batteryState charged --batteryLevel 100
+          xcrun simctl install "$DEVICE_ID" "$APP_PATH"
+          xcrun simctl launch "$DEVICE_ID" com.momentlose.xinxu
+          sleep 8
+          xcrun simctl io "$DEVICE_ID" screenshot artifacts/xin-xu-ios-simulator-preview.png
+
+      - name: Upload simulator screenshot
+        uses: actions/upload-artifact@v4
+        with:
+          name: xin-xu-ios-simulator-preview
+          path: artifacts/xin-xu-ios-simulator-preview.png
+          if-no-files-found: error
+          retention-days: 14

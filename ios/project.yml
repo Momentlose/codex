@@ -1,0 +1,24 @@
+name: XinXu
+options:
+  bundleIdPrefix: com.momentlose
+  deploymentTarget:
+    iOS: "16.0"
+targets:
+  XinXu:
+    type: application
+    platform: iOS
+    sources:
+      - path: Sources
+      - path: Resources
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.momentlose.xinxu
+        PRODUCT_NAME: XinXu
+        INFOPLIST_FILE: ios/Info.plist
+        GENERATE_INFOPLIST_FILE: NO
+        IPHONEOS_DEPLOYMENT_TARGET: "16.0"
+        TARGETED_DEVICE_FAMILY: "1"
+        SWIFT_VERSION: "5.0"
+        CODE_SIGNING_ALLOWED: NO
+    info:
+      path: ios/Info.plist
