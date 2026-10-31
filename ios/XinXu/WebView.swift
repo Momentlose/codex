@@ -19,6 +19,7 @@ struct WebView: UIViewRepresentable {
         webView.scrollView.showsVerticalScrollIndicator = false
         webView.scrollView.bounces = true
         webView.allowsBackForwardNavigationGestures = false
+        webView.navigationDelegate = context.coordinator
 
         if let url = Bundle.main.url(forResource: "薪序-薪资管理", withExtension: "html") {
             webView.loadFileURL(url, allowingReadAccessTo: url.deletingLastPathComponent())
@@ -29,4 +30,15 @@ struct WebView: UIViewRepresentable {
     }
 
     func updateUIView(_ uiView: WKWebView, context: Context) {}
+
+    func makeCoordinator() -> Coordinator { Coordinator() }
+
+    /// 页面加载完成后强制回到顶部。
+    /// WebKit 会按会话恢复上一次的滚动位置，导致重新打开时顶部标题栏被顶出屏幕。
+    final class Coordinator: NSObject, WKNavigationDelegate {
+        func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
+            webView.scrollView.setContentOffset(.zero, animated: false)
+            webView.evaluateJavaScript("window.scrollTo(0, 0); void 0;", completionHandler: nil)
+        }
+    }
 }
