@@ -261,8 +261,9 @@
       .action:active,.page-tab:active{transform:none}
     }
     @media (max-width:430px){
-      /* 日薪模式下卡片正文绝对定位满铺，需要整体下移，避免右上工具压住标题 */
-      .current.is-daily .current-info{inset:48px 0 0}
+      /* 日薪模式改为文档流布局：内容多时卡片自动增高，同时保留文字层叠顺序 */
+      .current.is-daily{padding:54px 18px 18px}
+      .current.is-daily:not(.is-expanded) .current-info{position:relative;inset:auto;z-index:2;display:block;padding:0;text-align:center}
       .current.is-daily .current-label{max-width:100%}
     }
 </style>
