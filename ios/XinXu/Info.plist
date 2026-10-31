@@ -29,10 +29,7 @@
 		<integer>1</integer>
 	</array>
 	<key>UILaunchScreen</key>
-	<dict>
-		<key>UIColorName</key>
-		<string></string>
-	</dict>
+	<dict/>
 	<key>UIRequiredDeviceCapabilities</key>
 	<array>
 		<string>arm64</string>
