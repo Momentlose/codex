@@ -8,11 +8,13 @@ WebKit 本地存储里。
 
 ```
 ios/
+├── XinXu.xcodeproj/    # Xcode 工程（含共享 scheme）
 ├── XinXu/
 │   ├── App.swift       # SwiftUI 入口
 │   ├── WebView.swift   # WKWebView 封装
-│   └── Info.plist      # Bundle 配置
-├── build.sh            # 编译 + 安装到模拟器
+│   ├── Info.plist      # Bundle 配置
+│   └── Assets.xcassets # App 图标（1024 单尺寸）
+├── build.sh            # 命令行编译 + 安装到模拟器
 └── build/              # 产物（已 gitignore）
 ```
 
@@ -34,6 +36,36 @@ xcrun simctl list devicetypes | grep "iPhone 14 Pro"
 xcrun simctl create "iPhone 14 Pro" \
   com.apple.CoreSimulator.SimDeviceType.iPhone-14-Pro \
   com.apple.CoreSimulator.SimRuntime.iOS-27-2
+```
+
+## 安装到真机（iPhone）
+
+1. 双击打开 `ios/XinXu.xcodeproj`
+2. 左侧选中 **XinXu** target → **Signing & Capabilities**
+   - 勾选 **Automatically manage signing**
+   - **Team** 选你的 Apple ID（没有就在 Xcode → Settings → Accounts 里登录）
+   - 如果 `com.momentlose.xinxu` 提示被占用，把 **Bundle Identifier** 改成
+     你自己的，例如 `com.<你的名字>.xinxu`
+3. 用数据线连上 iPhone，在 Xcode 顶部设备列表里选中它
+4. 点 **Run**（⌘R）
+
+首次运行后，手机上会提示「不受信任的开发者」：
+
+> 设置 → 通用 → VPN 与设备管理 → 开发者 App → 选择你的 Apple ID → 信任
+
+**注意**：用免费 Apple ID 签名，App 有效期只有 **7 天**，到期需要重新 Run 一次
+（数据不会丢，存在 App 沙盒里）。加入付费开发者账号（$99/年）可延长到一年。
+
+### 命令行构建（已验证）
+
+```bash
+# 模拟器
+xcodebuild -project XinXu.xcodeproj -scheme XinXu \
+  -sdk iphonesimulator -destination 'platform=iOS Simulator,name=iPhone 14 Pro' build
+
+# 真机架构（不签名，仅验证可编译）
+xcodebuild -project XinXu.xcodeproj -scheme XinXu -configuration Release \
+  -sdk iphoneos -destination 'generic/platform=iOS' CODE_SIGNING_ALLOWED=NO build
 ```
 
 ## 设计说明
