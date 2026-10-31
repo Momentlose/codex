@@ -6,7 +6,10 @@
   <meta name="theme-color" content="#c8e8ff">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="apple-mobile-web-app-title" content="牛马费">
   <link rel="manifest" href="manifest.webmanifest">
+  <link rel="apple-touch-icon" href="icon-180.png">
+  <link rel="icon" type="image/png" sizes="512x512" href="icon-512.png">
   <title>牛马费</title>
   <style>
     :root{--bg:#f5f6f2;--ink:#202821;--muted:#858e86;--green:#315d46;--line:#e8ebe5;--card:#fff;--gold:#edbd52}
@@ -208,7 +211,61 @@
     .current.is-daily.is-expanded .current-label,.current.is-daily.is-expanded .month-name{max-width:100%}
     .current.is-daily.is-expanded .amount{font-size:clamp(46px,12.5vw,92px);margin:12px 0 10px;line-height:1.05;letter-spacing:-.06em}
     @media(max-width:560px){.current.is-daily.is-expanded .current-info{width:calc(100% - 20px)}.current.is-daily.is-expanded .amount{font-size:clamp(46px,12.5vw,92px)}}
-  </style>
+  
+    /* ===== iOS 适配层（iPhone 14 Pro 393×852）===== */
+    @media (max-width:430px){
+      html{-webkit-text-size-adjust:100%;text-size-adjust:100%}
+      body{-webkit-tap-highlight-color:transparent;overscroll-behavior-y:contain}
+      .wrap{padding-top:calc(14px + env(safe-area-inset-top));padding-bottom:calc(92px + env(safe-area-inset-bottom))}
+
+      .top{margin-bottom:12px;gap:8px}
+      .top-tools{flex-wrap:nowrap;justify-content:flex-end;gap:6px}
+      .top-tools .today{flex:0 0 auto;text-align:right;font-size:10px;opacity:.7}
+      .cloud-button,.sound-toggle{min-height:34px;padding:0 8px;font-size:10.5px}
+
+      .month-control{margin:0 0 8px;gap:7px}
+      .month-open,.payday-open{min-height:34px;font-size:12px;padding:0 12px}
+      .mode-control{margin:0 0 14px}
+      .mode-toggle{min-height:32px;font-size:11.5px;padding:0 12px}
+
+      .calendar{gap:8px;margin-bottom:16px}
+      .cal-card{padding:11px 10px;border-radius:14px}
+      .cal-value{font-size:19px;letter-spacing:-.03em}
+
+      .current{padding:56px 18px 20px;border-radius:20px}
+      .current-card-tools{top:12px;right:12px;gap:6px}
+      .current-card-tools button{min-height:30px;padding:0 9px;font-size:10.5px;border-radius:9px}
+      .current-label{font-size:12px}
+      .amount{font-size:38px}
+
+      .action{min-height:82px;border-radius:16px;transition:transform .16s ease,box-shadow .16s ease}
+      .action:active{transform:scale(.97)}
+
+      .entry{padding:10px 9px;border-radius:12px}
+      .undo,.photo-link{min-height:30px;padding:0 9px;font-size:10px;border-radius:8px}
+
+      .page-tabs{padding:5px;border-radius:18px;border:1px solid #ffffffb0;background:#ffffffd9;
+        box-shadow:0 10px 30px #1b2a4a26,0 2px 8px #1b2a4a14;
+        -webkit-backdrop-filter:blur(22px) saturate(180%);backdrop-filter:blur(22px) saturate(180%)}
+      .page-tab{min-height:44px;border-radius:13px;font-size:12.5px;transition:color .2s ease,background .2s ease,transform .12s ease}
+      .page-tab:active{transform:scale(.96)}
+      .page-tab[aria-selected="true"]{background:linear-gradient(135deg,#3159d9,#6a55db);box-shadow:0 6px 16px #4a56c240}
+
+      .page-view:not([hidden]){animation:pageIn .26s cubic-bezier(.22,.61,.36,1)}
+      @keyframes pageIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+
+      .dialog{border-radius:22px 22px 0 0}
+    }
+    @media (prefers-reduced-motion:reduce){
+      .page-view:not([hidden]){animation:none}
+      .action:active,.page-tab:active{transform:none}
+    }
+    @media (max-width:430px){
+      /* 日薪模式下卡片正文绝对定位满铺，需要整体下移，避免右上工具压住标题 */
+      .current.is-daily .current-info{inset:48px 0 0}
+      .current.is-daily .current-label{max-width:100%}
+    }
+</style>
 </head>
 <body>
   <main class="wrap">
@@ -233,7 +290,7 @@
     <section class="daily-target-card" id="dailyTargetSection" data-home-view hidden><h2>想要的东西要工作多久？</h2><form id="dailyTargetForm" class="daily-target-form"><label for="dailyTargetName">想买什么<input id="dailyTargetName" maxlength="80" placeholder="例如：一台电脑" required></label><label for="dailyTargetAmount">大概金额（元）<input id="dailyTargetAmount" type="number" min="0.01" step="0.01" inputmode="decimal" placeholder="例如：8000" required></label><button type="submit">计算工作时长</button></form><div class="daily-target-result" id="dailyTargetResult" hidden><div class="daily-target-result-name" id="dailyTargetTitle"></div><strong class="daily-target-duration" id="dailyTargetDuration"></strong><p id="dailyTargetBasis"></p></div></section>
     <div class="foot" id="homeFoot" data-home-view>记录保存在当前浏览器；照片保存在本机浏览器数据库</div>
     <section class="page-view" id="consumptionPage" data-page="consumption" hidden>
-      <div class="consumption-head"><div><h1>时间能换取来什么？</h1><p class="intro">用当前收入时薪，看看每件想要的东西需要投入多少时间。</p></div></div>
+      <div class="consumption-head"><div><h1>时间能换来什么？</h1><p class="intro">用当前收入时薪，看看每件想要的东西需要投入多少时间。</p></div></div>
       <details class="consumption-disclosure"><summary>收入与时薪估算</summary><div class="disclosure-content"><div class="consumption-balance"><small>当前周期收入估算</small><div class="consumption-income" id="consumptionIncome">¥0</div><div class="consumption-estimate" id="consumptionRate">按月工时估算收入时薪</div></div><label class="work-hours-control" for="monthlyWorkHours">用于估算的月工时 <input id="monthlyWorkHours" type="number" min="1" max="744" step="1" value="174"> 小时</label></div></details>
       <details class="consumption-disclosure"><summary>添加想购买的物品</summary><div class="disclosure-content"><form class="consumption-form" id="consumptionForm"><h2>填写物品信息</h2><div class="consumption-form-grid"><div class="field"><label for="wantName">物品名称</label><input id="wantName" maxlength="80" placeholder="例如：iPhone" required></div><div class="field"><label for="wantAmount">物品金额（元）</label><input id="wantAmount" type="number" min="0.01" step="0.01" inputmode="decimal" placeholder="10000" required></div><div class="field"><label for="wantReason">用途 / 想买的理由</label><input id="wantReason" maxlength="180" placeholder="工作、学习或日常使用"></div></div><button class="consumption-submit" type="submit">加入想买清单</button></form></div></details>
       <details class="consumption-drawer"><summary><span>想买清单</span><span class="drawer-count"><span id="consumptionItemCount">0</span> 件</span></summary><div class="drawer-content"><div class="consumption-items" id="consumptionItems"></div></div></details>
