@@ -1,11 +1,11 @@
 import SwiftUI
+import UIKit
 
 @main
 struct XinXuApp: App {
     var body: some Scene {
         WindowGroup {
-            ContentView()
-                .preferredColorScheme(.light)
+            ContentView().preferredColorScheme(.light)
         }
     }
 }
