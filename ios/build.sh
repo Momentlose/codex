@@ -5,7 +5,7 @@ set -euo pipefail
 
 IOS_DIR="$(cd "$(dirname "$0")" && pwd)"
 REPO="$(cd "$IOS_DIR/.." && pwd)"
-BUILD="$IOS_DIR/build"
+BUILD="${BUILD_DIR:-$IOS_DIR/build}"
 APP="$BUILD/牛马费.app"
 UDID="${1:-8ADE95B1-8751-458C-A8AC-7C34750A74F9}"
 BUNDLE_ID="com.momentlose.xinxu"
@@ -18,12 +18,15 @@ echo "· 拷贝网页资源"
 for f in "薪序-薪资管理.html" cloud-sync.js manifest.webmanifest service-worker.js icon-180.png icon-512.png; do
   cp "$REPO/$f" "$APP/"
 done
+cp -R "$REPO/ui-icons" "$APP/"
+xattr -cr "$APP/ui-icons"
 cp "$REPO/icon-180.png" "$APP/AppIcon.png"
 cp "$REPO/icon-180.png" "$APP/AppIcon60x60@2x.png"
 cp "$REPO/icon-512.png" "$APP/AppIcon60x60@3x.png"
 
 echo "· 生成 Info.plist"
 cp "$IOS_DIR/XinXu/Info.plist" "$APP/Info.plist"
+xattr -cr "$APP"
 
 echo "· 编译 Swift"
 SDK="$(xcrun --sdk iphonesimulator --show-sdk-path)"

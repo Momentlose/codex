@@ -16,6 +16,7 @@
 		A10000000000000000000022 /* service-worker.js in Resources */ = {isa = PBXBuildFile; fileRef = A10000000000000000000012 /* service-worker.js */; };
 		A10000000000000000000023 /* icon-180.png in Resources */ = {isa = PBXBuildFile; fileRef = A10000000000000000000013 /* icon-180.png */; };
 		A10000000000000000000024 /* icon-512.png in Resources */ = {isa = PBXBuildFile; fileRef = A10000000000000000000014 /* icon-512.png */; };
+		A10000000000000000000026 /* ui-icons in Resources */ = {isa = PBXBuildFile; fileRef = A10000000000000000000016 /* ui-icons */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -30,6 +31,7 @@
 		A10000000000000000000012 /* service-worker.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; name = "service-worker.js"; path = "../service-worker.js"; sourceTree = "<group>"; };
 		A10000000000000000000013 /* icon-180.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "icon-180.png"; path = "../icon-180.png"; sourceTree = "<group>"; };
 		A10000000000000000000014 /* icon-512.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "icon-512.png"; path = "../icon-512.png"; sourceTree = "<group>"; };
+		A10000000000000000000016 /* ui-icons */ = {isa = PBXFileReference; lastKnownFileType = folder; name = ui-icons; path = ../ui-icons; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -80,6 +82,7 @@
 				A10000000000000000000012 /* service-worker.js */,
 				A10000000000000000000013 /* icon-180.png */,
 				A10000000000000000000014 /* icon-512.png */,
+				A10000000000000000000016 /* ui-icons */,
 			);
 			name = Web;
 			sourceTree = "<group>";
@@ -150,6 +153,7 @@
 				A10000000000000000000022 /* service-worker.js in Resources */,
 				A10000000000000000000023 /* icon-180.png in Resources */,
 				A10000000000000000000024 /* icon-512.png in Resources */,
+				A10000000000000000000026 /* ui-icons in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

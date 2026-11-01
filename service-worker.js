@@ -1,5 +1,5 @@
-const CACHE='xin-xu-static-v21';
-const FILES=['./薪序-薪资管理.html','./cloud-sync.js','./manifest.webmanifest','./icon-180.png','./icon-512.png'];
+const CACHE='xin-xu-static-v22';
+const FILES=['./薪序-薪资管理.html','./cloud-sync.js','./manifest.webmanifest','./icon-180.png','./icon-512.png','./ui-icons/chart-line-uptrend-xyaxis.png','./ui-icons/arrow-clockwise.png','./ui-icons/speaker-wave-2.png','./ui-icons/house.png','./ui-icons/house-fill.png','./ui-icons/clock.png','./ui-icons/clock-fill.png','./ui-icons/chart-bar.png','./ui-icons/chart-bar-fill.png','./ui-icons/gearshape.png','./ui-icons/gearshape-fill.png','./ui-icons/briefcase.png','./ui-icons/video.png','./ui-icons/person-crop-rectangle.png'];
 self.addEventListener('install',event=>{event.waitUntil(caches.open(CACHE).then(cache=>cache.addAll(FILES)).then(()=>self.skipWaiting()))});
 self.addEventListener('activate',event=>{event.waitUntil(caches.keys().then(keys=>Promise.all(keys.filter(key=>key!==CACHE).map(key=>caches.delete(key)))).then(()=>self.clients.claim()))});
 self.addEventListener('fetch',event=>{const request=event.request;if(request.method!=='GET'||new URL(request.url).origin!==location.origin)return;event.respondWith(caches.match(request).then(cached=>cached||fetch(request).then(response=>{if(response.ok){const copy=response.clone();caches.open(CACHE).then(cache=>cache.put(request,copy))}return response}).catch(()=>caches.match('./薪序-薪资管理.html'))))});
