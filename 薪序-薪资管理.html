@@ -6,11 +6,11 @@
   <meta name="theme-color" content="#f2f2f7">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="default">
-  <meta name="apple-mobile-web-app-title" content="薪序">
+  <meta name="apple-mobile-web-app-title" content="牛马费">
   <link rel="manifest" href="manifest.webmanifest">
   <link rel="apple-touch-icon" href="icon-180.png">
   <link rel="icon" type="image/png" sizes="512x512" href="icon-512.png">
-  <title>薪序 · 本月</title>
+  <title>牛马费 · 本月</title>
   <style>
     :root{--bg:#f5f6f2;--ink:#202821;--muted:#858e86;--green:#315d46;--line:#e8ebe5;--card:#fff;--gold:#edbd52}
     *{box-sizing:border-box}[hidden]{display:none!important}body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Microsoft YaHei",sans-serif}
@@ -441,28 +441,285 @@
       body.ios-dopamine .action-value{font-size:12.5px;margin-left:0}
       body.ios-dopamine .today{max-width:44px;font-size:10px;line-height:1.2}
     }
+    /* Homepage v2: Dopamine Finance, scoped to the home tab only. */
+    .notification-button{display:none}
+    .new-entry-fab{display:none}
+    .quick-heading{display:none}
+    body.ios-dopamine.home-active{
+      --canvas:#080a0f;--surface:#0f131b;--surface-raised:#151a24;--border:#262d3a;
+      --text-primary:#f7faff;--text-secondary:#929db0;--sky:#75e7ff;--cobalt:#556bff;
+      --lime:#dfff68;--lemon:#fff36b;--coral:#ff8ea8;--violet:#8d65ff;
+      background:
+        radial-gradient(circle at 94% 4%,rgba(85,107,255,.2) 0,rgba(85,107,255,.05) 24%,transparent 43%),
+        radial-gradient(circle at 2% 37%,rgba(255,121,201,.13) 0,transparent 34%),
+        radial-gradient(circle at 90% 63%,rgba(117,231,255,.1) 0,transparent 38%),
+        #080a0f!important;
+      color:var(--text-primary)
+    }
+    body.ios-dopamine.home-active .wrap{
+      width:min(448px,100%);padding:0 17px calc(112px + env(safe-area-inset-bottom));background:transparent;
+      border:0;border-radius:0;overflow:visible
+    }
+    body.ios-dopamine.home-active .top{
+      min-height:calc(94px + env(safe-area-inset-top));margin:0;padding:calc(11px + env(safe-area-inset-top)) 0 14px;
+      border:0;background:rgba(8,10,15,.86);backdrop-filter:blur(18px) saturate(150%);-webkit-backdrop-filter:blur(18px) saturate(150%)
+    }
+    body.ios-dopamine.home-active .brand{position:relative;display:flex;align-items:center;gap:12px;color:var(--text-primary);font-size:20px;font-weight:720}
+    body.ios-dopamine.home-active .logo{
+      width:48px;height:48px;border-radius:15px;
+      background-color:var(--sky);background-image:url('./ui-icons/target.png');background-size:27px;background-position:center;background-repeat:no-repeat;
+      box-shadow:none
+    }
+    body.ios-dopamine.home-active .top-tools{position:static;align-self:flex-start;margin-top:9px;gap:7px}
+    body.ios-dopamine.home-active .cloud-button,
+    body.ios-dopamine.home-active .notification-button{
+      display:grid;place-items:center;width:44px;height:44px;min-height:44px;padding:0;
+      border:1px solid rgba(255,255,255,.18);border-radius:50%;background-color:rgba(24,29,40,.9);
+      background-position:center;background-size:20px;background-repeat:no-repeat
+    }
+    body.ios-dopamine.home-active .cloud-button,
+    body.ios-dopamine.home-active .notification-button{background-image:none}
+    body.ios-dopamine.home-active .cloud-button:hover{border-color:rgba(117,231,255,.55);background-color:rgba(117,231,255,.1)}
+    body.ios-dopamine.home-active .cloud-button:active{transform:scale(.95)}
+    body.ios-dopamine.home-active .cloud-button:before,
+    body.ios-dopamine.home-active .notification-button:before{
+      content:"";width:20px;height:20px;background-position:center;background-size:contain;background-repeat:no-repeat;filter:invert(1)
+    }
+    body.ios-dopamine.home-active .cloud-button:before{background-image:url('./ui-icons/arrow-clockwise.png')}
+    body.ios-dopamine.home-active .notification-button:before{background-image:url('./ui-icons/bell.png')}
+    body.ios-dopamine.home-active .notification-button{opacity:.72}
+    body.ios-dopamine.home-active .sound-toggle{display:none}
+    body.ios-dopamine.home-active .today{
+      position:absolute;left:77px;bottom:14px;width:190px;max-width:none;margin:0;color:#abb3c2;
+      font-size:10px;line-height:1.2;letter-spacing:.09em;text-align:left;text-transform:uppercase;white-space:nowrap
+    }
+    body.ios-dopamine.home-active .page-heading{display:none}
+    body.ios-dopamine.home-active .month-control{margin:2px 0 12px;min-height:32px}
+    body.ios-dopamine.home-active .month-open,
+    body.ios-dopamine.home-active .payday-open{min-height:32px;color:var(--text-secondary);font-size:11px;font-weight:520}
+    body.ios-dopamine.home-active .month-open{color:var(--sky)}
+    body.ios-dopamine.home-active .month-menu{
+      top:34px;border-color:var(--border);border-radius:18px;background:var(--surface-raised);color:var(--text-primary);
+      box-shadow:0 18px 42px rgba(0,0,0,.38)
+    }
+    body.ios-dopamine.home-active .month-menu button,
+    body.ios-dopamine.home-active .month-menu input{border-color:var(--border);background:var(--surface);color:var(--text-primary)}
+    body.ios-dopamine.home-active .mode-control{margin:0 0 15px}
+    body.ios-dopamine.home-active .mode-segments{
+      min-height:54px;padding:4px;border:1px solid var(--border);border-radius:18px;background:rgba(15,19,27,.88)
+    }
+    body.ios-dopamine.home-active .mode-segments button{
+      min-height:46px;border-radius:14px;color:var(--text-secondary);font-size:14px;font-weight:650;transition:color .2s,background-color .2s,transform .15s
+    }
+    body.ios-dopamine.home-active .mode-segments button:hover{color:var(--text-primary)}
+    body.ios-dopamine.home-active .mode-segments button:active{transform:scale(.985)}
+    body.ios-dopamine.home-active .mode-segments button[aria-pressed="true"]{
+      color:#161910;background:linear-gradient(120deg,var(--lemon),var(--lime));box-shadow:none
+    }
+    body.ios-dopamine.home-active .current{
+      position:relative;margin:0 0 16px;padding:22px;border:0;border-radius:28px;
+      background:linear-gradient(125deg,#a9f7ff 0%,#68deff 48%,#a89aff 100%);color:#0b1119;overflow:hidden
+    }
+    body.ios-dopamine.home-active .current:after{
+      display:block;content:"";position:absolute;z-index:0;right:-114px;top:-120px;width:300px;height:300px;
+      border:1px solid rgba(15,23,42,.16);border-radius:50%;box-shadow:0 0 0 30px rgba(15,23,42,.045),0 0 0 68px rgba(15,23,42,.035)
+    }
+    body.ios-dopamine.home-active .current-info{position:relative;z-index:2;display:block;padding:0;text-align:left}
+    body.ios-dopamine.home-active .current-label{max-width:65%;color:#15202d;font-size:14px;font-weight:620}
+    body.ios-dopamine.home-active .amount{margin-top:8px;color:#080b12;font-size:64px;line-height:.96;letter-spacing:-.07em;white-space:normal;overflow-wrap:anywhere}
+    body.ios-dopamine.home-active .month-name{
+      position:absolute;z-index:3;top:4px;right:0;max-width:43%;margin:0;color:rgba(12,19,31,.68);
+      font-size:12px;font-weight:600;line-height:1.4;text-align:right
+    }
+    body.ios-dopamine.home-active .current-card-tools{position:relative;inset:auto;display:flex;justify-content:flex-end;gap:5px;margin-top:8px}
+    body.ios-dopamine.home-active .current-card-tools button{
+      min-height:32px;padding:0 8px;border:1px solid rgba(12,20,40,.14);border-radius:10px;
+      background:rgba(255,255,255,.25);color:rgba(12,20,40,.7);font-size:10px
+    }
+    body.ios-dopamine.home-active .current-message{position:relative;inset:auto;max-width:none;margin:2px 0 10px;padding:0;color:rgba(12,20,40,.76);font-size:12px;text-align:left}
+    body.ios-dopamine.home-active .product-meta:not([hidden]){position:relative;inset:auto;margin-top:16px;color:#101722}
+    body.ios-dopamine.home-active .product-meta strong{font-size:18px;color:#0b1119}
+    body.ios-dopamine.home-active .product-meta>span,
+    body.ios-dopamine.home-active .product-meta>small{display:none}
+    body.ios-dopamine.home-active .goal-guide{color:rgba(12,20,40,.68);font-size:11px}
+    body.ios-dopamine.home-active .product-photo:not([hidden]){width:94px;height:94px;border-color:rgba(255,255,255,.4);background:rgba(255,255,255,.2)}
+    body.ios-dopamine.home-active .product-photo-clear:not([hidden]){background:rgba(8,10,15,.68);color:white;border-color:transparent}
+    body.ios-dopamine.home-active .product-progress:not([hidden]){
+      position:relative;inset:auto;display:grid;grid-template-columns:minmax(0,1fr) 78px;grid-template-rows:auto 9px;
+      column-gap:14px;align-items:end;margin-top:13px
+    }
+    body.ios-dopamine.home-active .progress-caption{display:contents}
+    body.ios-dopamine.home-active .progress-caption span{grid-column:1;grid-row:1;color:rgba(12,20,40,.72);font-size:10px}
+    body.ios-dopamine.home-active .progress-caption strong{
+      position:relative;z-index:2;grid-column:2;grid-row:1/span 2;display:grid;place-items:center;align-self:center;justify-self:end;
+      width:74px;height:74px;border-radius:50%;color:#0a1019;font-size:14px;font-variant-numeric:tabular-nums;
+      background:conic-gradient(#111827 var(--goal-progress,0%),rgba(255,255,255,.32) 0)
+    }
+    body.ios-dopamine.home-active .progress-caption strong:before{
+      content:"";position:absolute;inset:7px;border-radius:50%;background:#90ecff;box-shadow:inset 0 0 0 1px rgba(15,23,42,.08);z-index:-1
+    }
+    body.ios-dopamine.home-active .progress-track{grid-column:1;grid-row:2;height:7px;align-self:end;background:rgba(12,20,40,.18)}
+    body.ios-dopamine.home-active .progress-track i{background:#0b1119}
+    body.ios-dopamine.home-active .calendar{
+      display:grid;grid-template-columns:1.08fr 1fr;gap:12px;margin:0 0 14px;border:0;border-radius:0;background:transparent;overflow:visible
+    }
+    body.ios-dopamine.home-active .calendar:before{display:none}
+    body.ios-dopamine.home-active .cal-card{
+      position:relative;display:flex;flex-direction:column;justify-content:space-between;min-height:156px;padding:20px;
+      border:0;border-radius:25px;background:linear-gradient(145deg,var(--lemon),var(--lime));color:#10150c;overflow:hidden
+    }
+    body.ios-dopamine.home-active .cal-card:after{
+      content:"";position:absolute;right:-40px;top:-38px;width:132px;height:132px;border-radius:50%;
+      background:rgba(255,255,255,.23);box-shadow:0 0 0 24px rgba(255,255,255,.08)
+    }
+    body.ios-dopamine.home-active .cal-card:nth-child(2){display:none}
+    body.ios-dopamine.home-active .cal-card:nth-child(3){display:none}
+    body.ios-dopamine.home-active .calendar-secondary{
+      display:grid;grid-template-rows:1fr 1fr;min-width:0;border-radius:25px;overflow:hidden;
+      background:linear-gradient(145deg,#5441f2,#8d65ff);color:white
+    }
+    body.ios-dopamine.home-active .cal-row{position:relative;display:flex;align-items:center;justify-content:space-between;gap:9px;min-width:0;padding:15px 17px;overflow:hidden}
+    body.ios-dopamine.home-active .cal-row+.cal-row{border-top:1px solid rgba(255,255,255,.3)}
+    body.ios-dopamine.home-active .cal-row:after{
+      content:"";position:absolute;right:-44px;bottom:-54px;width:130px;height:130px;border:1px solid rgba(255,255,255,.18);border-radius:50%
+    }
+    body.ios-dopamine.home-active .cal-row-label{color:rgba(255,255,255,.76);font-size:11px}
+    body.ios-dopamine.home-active .cal-row-value{color:white;font-size:22px;font-weight:740;letter-spacing:-.035em;white-space:nowrap}
+    body.ios-dopamine.home-active #paydayDays{color:var(--lime)}
+    body.ios-dopamine.home-active .cal-label{position:relative;z-index:1;color:rgba(16,21,12,.7);font-size:12px;font-weight:600}
+    body.ios-dopamine.home-active .cal-value{position:relative;z-index:1;margin:auto 0 0;color:#0a0d09;font-size:40px;line-height:1;font-weight:760;letter-spacing:-.05em}
+    body.ios-dopamine.home-active .cal-hint{position:relative;z-index:1;margin-top:7px;color:rgba(16,21,12,.66);font-size:11px}
+    body.ios-dopamine.home-active .quick-heading{display:flex;align-items:center;justify-content:space-between;margin:4px 2px 11px}
+    body.ios-dopamine.home-active .quick-heading h2{margin:0;color:var(--text-primary);font-size:18px;font-weight:720;letter-spacing:-.02em}
+    body.ios-dopamine.home-active .quick-heading a{color:var(--sky-soft);font-size:12px;text-decoration:none}
+    body.ios-dopamine.home-active .actions{
+      display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:0;margin:0 0 24px;padding:8px;
+      border:1px solid var(--border);border-radius:25px;background:var(--surface)
+    }
+    body.ios-dopamine.home-active .actions.is-daily{display:none}
+    body.ios-dopamine.home-active .action{
+      display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:116px;padding:10px 7px;
+      border:0;border-radius:18px;background:transparent;color:var(--text-primary);transform:none;box-shadow:none
+    }
+    body.ios-dopamine.home-active .action+.action{border-left:1px solid rgba(255,255,255,.08)}
+    body.ios-dopamine.home-active .action:hover{background:rgba(255,255,255,.045)}
+    body.ios-dopamine.home-active .action:active{transform:scale(.98)}
+    body.ios-dopamine.home-active .action-top{display:flex;flex-direction:column;align-items:center;gap:7px}
+    body.ios-dopamine.home-active .action-icon{
+      width:52px;height:52px;border:0;border-radius:50%;background-size:23px;background-position:center;background-repeat:no-repeat
+    }
+    body.ios-dopamine.home-active .action[data-kind="work"] .action-icon{background-color:var(--cobalt);background-image:url('./ui-icons/briefcase.png');filter:none}
+    body.ios-dopamine.home-active .action[data-kind="shoot"] .action-icon{background-color:var(--lime);background-image:url('./ui-icons/video.png')}
+    body.ios-dopamine.home-active .action[data-kind="camera"] .action-icon{background-color:var(--coral);background-image:url('./ui-icons/person-crop-rectangle.png')}
+    body.ios-dopamine.home-active .action[data-kind="work"] .action-icon picture{display:none}
+    body.ios-dopamine.home-active .action-name{color:var(--text-primary);font-size:12px;font-weight:560;text-align:center}
+    body.ios-dopamine.home-active .action-value{margin:7px 0 0;font-size:13px;font-weight:680;text-align:center;white-space:nowrap}
+    body.ios-dopamine.home-active .action[data-kind="work"] .action-value{color:#9eb5ff}
+    body.ios-dopamine.home-active .action[data-kind="shoot"] .action-value{color:var(--lime)}
+    body.ios-dopamine.home-active .action[data-kind="camera"] .action-value{color:var(--coral)}
+    body.ios-dopamine.home-active .section{margin:0 2px 10px}
+    body.ios-dopamine.home-active .section h2{color:var(--text-primary);font-size:18px}
+    body.ios-dopamine.home-active .section small{color:var(--text-secondary);font-size:11px}
+    body.ios-dopamine.home-active .detail-link,
+    body.ios-dopamine.home-active .export-button{color:var(--sky-soft)}
+    body.ios-dopamine.home-active .month-block{
+      border:1px solid var(--border);border-radius:24px;background:rgba(15,19,27,.84);overflow:hidden
+    }
+    body.ios-dopamine.home-active .month-head{padding:13px 16px;border-color:var(--border);color:var(--text-secondary)}
+    body.ios-dopamine.home-active .income-group{background:transparent}
+    body.ios-dopamine.home-active .income-group+.income-group{border-color:var(--border)}
+    body.ios-dopamine.home-active .group-toggle{min-height:62px;background:transparent;color:var(--text-primary)}
+    body.ios-dopamine.home-active .group-toggle:hover{background:rgba(255,255,255,.04)}
+    body.ios-dopamine.home-active .group-title{color:var(--text-primary)}
+    body.ios-dopamine.home-active .group-meta{color:var(--text-secondary)}
+    body.ios-dopamine.home-active .group-sum{color:var(--lime)}
+    body.ios-dopamine.home-active .income-group:nth-child(1) .entry-icon{background-color:#344fa8}
+    body.ios-dopamine.home-active .income-group:nth-child(2) .entry-icon{background-color:#485813}
+    body.ios-dopamine.home-active .income-group:nth-child(3) .entry-icon{background-color:#623246}
+    body.ios-dopamine.home-active .group-details{background:#0b0f16;border-color:var(--border)}
+    body.ios-dopamine.home-active .entry{background:var(--surface);border:1px solid var(--border);color:var(--text-primary)}
+    body.ios-dopamine.home-active .entry-name{color:var(--text-primary)}
+    body.ios-dopamine.home-active .entry-time,body.ios-dopamine.home-active .entry-amount{color:var(--text-secondary)}
+    body.ios-dopamine.home-active .entry-amount{color:var(--lime)}
+    body.ios-dopamine.home-active .undo,
+    body.ios-dopamine.home-active .photo-link{border-color:var(--border);background:var(--surface-raised);color:var(--text-secondary)}
+    body.ios-dopamine.home-active .daily-settings,
+    body.ios-dopamine.home-active .daily-target-card{border-color:var(--border);background:var(--surface);color:var(--text-primary)}
+    body.ios-dopamine.home-active .daily-settings summary{color:var(--text-primary)}
+    body.ios-dopamine.home-active .daily-settings-grid label,
+    body.ios-dopamine.home-active .daily-rest-toggle,
+    body.ios-dopamine.home-active .daily-settings-note{color:var(--text-secondary)}
+    body.ios-dopamine.home-active .daily-settings-grid input,
+    body.ios-dopamine.home-active .daily-target-form input{background:var(--surface-raised);border-color:var(--border);color:var(--text-primary)}
+    body.ios-dopamine.home-active .page-tabs{
+      left:50%;right:auto;bottom:calc(8px + env(safe-area-inset-bottom));width:min(430px,calc(100% - 24px));
+      height:68px;padding:7px 10px 6px;border:1px solid rgba(255,255,255,.12);border-radius:24px;
+      background:rgba(15,19,27,.9);box-shadow:0 16px 38px rgba(0,0,0,.35);transform:translateX(-50%)
+    }
+    body.ios-dopamine.home-active .page-tabs{grid-template-columns:1fr 1fr 62px 1fr 1fr}
+    body.ios-dopamine.home-active .page-tab:nth-child(1){grid-column:1}
+    body.ios-dopamine.home-active .page-tab:nth-child(2){grid-column:2}
+    body.ios-dopamine.home-active .page-tab:nth-child(3){grid-column:4}
+    body.ios-dopamine.home-active .page-tab:nth-child(4){grid-column:5}
+    body.ios-dopamine.home-active .page-tab{min-height:54px;color:#7e8797;font-size:10px}
+    body.ios-dopamine.home-active .page-tab[aria-selected="true"]{color:var(--sky);background:transparent;box-shadow:none}
+    body.ios-dopamine.home-active .page-tab[aria-selected="true"] .tab-symbol{filter:brightness(0) saturate(100%) invert(86%) sepia(39%) saturate(867%) hue-rotate(151deg) brightness(106%) contrast(101%)}
+    body.ios-dopamine.home-active .new-entry-fab{
+      position:fixed;z-index:41;left:50%;bottom:calc(29px + env(safe-area-inset-bottom));display:grid;place-items:center;
+      width:64px;height:64px;padding:0;border:4px solid #151923;border-radius:50%;
+      background:linear-gradient(145deg,var(--lime),#82f5ff 58%,#bca7ff);color:#0b1119;
+      box-shadow:0 6px 24px rgba(0,0,0,.4);transform:translateX(-50%)
+    }
+    body.ios-dopamine.home-active .new-entry-fab:before{content:"";position:absolute;width:25px;height:2px;border-radius:2px;background:currentColor}
+    body.ios-dopamine.home-active .new-entry-fab:after{content:"";position:absolute;width:2px;height:25px;border-radius:2px;background:currentColor}
+    body.ios-dopamine.home-active .new-entry-fab:hover{filter:brightness(1.06)}
+    body.ios-dopamine.home-active .new-entry-fab:active{transform:translateX(-50%) scale(.96)}
+    body.ios-dopamine.home-active .toast{bottom:calc(92px + env(safe-area-inset-bottom))}
+    body.ios-dopamine.home-active button:focus-visible,
+    body.ios-dopamine.home-active a:focus-visible,
+    body.ios-dopamine.home-active input:focus-visible,
+    body.ios-dopamine.home-active select:focus-visible{outline:3px solid var(--sky);outline-offset:2px}
+    @media(max-width:360px){
+      body.ios-dopamine.home-active .wrap{padding-left:13px;padding-right:13px}
+      body.ios-dopamine.home-active .amount{font-size:54px}
+      body.ios-dopamine.home-active .cal-card{padding:17px}
+      body.ios-dopamine.home-active .cal-value{font-size:34px}
+      body.ios-dopamine.home-active .cal-row{padding:13px}
+      body.ios-dopamine.home-active .action-icon{width:46px;height:46px}
+      body.ios-dopamine.home-active .action-name{font-size:11px}
+      body.ios-dopamine.home-active .action-value{font-size:12px}
+    }
+    @media(prefers-reduced-motion:reduce){
+      body.ios-dopamine.home-active *,
+      body.ios-dopamine.home-active *:before,
+      body.ios-dopamine.home-active *:after{transition-duration:.01ms!important;animation-duration:.01ms!important}
+    }
 </style>
 </head>
-<body class="ios-dopamine">
+<body class="ios-dopamine home-active">
   <main class="wrap">
+    <button class="new-entry-fab" id="newEntryFab" type="button" aria-label="新增记录"></button>
     <nav class="page-tabs" role="tablist" aria-label="主页面"><button class="page-tab" id="tabHome" type="button" role="tab" aria-selected="true" data-page-target="home"><span class="tab-symbol" style="--idle:url('./ui-icons/house.png');--active:url('./ui-icons/house-fill.png')" aria-hidden="true"></span><span>首页</span></button><button class="page-tab" id="tabConsumption" type="button" role="tab" aria-selected="false" data-page-target="consumption"><span class="tab-symbol" style="--idle:url('./ui-icons/clock.png');--active:url('./ui-icons/clock-fill.png')" aria-hidden="true"></span><span>时间</span></button><button class="page-tab" id="tabComfort" type="button" role="tab" aria-selected="false" data-page-target="comfort"><span class="tab-symbol" style="--idle:url('./ui-icons/chart-bar.png');--active:url('./ui-icons/chart-bar-fill.png')" aria-hidden="true"></span><span>舒适度</span></button><button class="page-tab" id="tabSettings" type="button" role="tab" aria-selected="false" data-page-target="settings"><span class="tab-symbol" style="--idle:url('./ui-icons/gearshape.png');--active:url('./ui-icons/gearshape-fill.png')" aria-hidden="true"></span><span>设置</span></button></nav>
-    <header class="top"><div class="brand"><span class="logo" aria-hidden="true"></span><span>薪序</span></div><div class="top-tools"><button class="cloud-button" id="cloudButton" type="button" aria-label="云端同步：本机保存"></button><button class="sound-toggle" id="soundToggle" type="button" aria-pressed="true" aria-label="关闭提示音"></button><div class="today" id="today" data-home-view></div></div></header>
+    <header class="top"><div class="brand"><span class="logo" aria-hidden="true"></span><span>牛马费</span></div><div class="top-tools"><button class="cloud-button" id="cloudButton" type="button" aria-label="云端同步：本机保存"></button><button class="sound-toggle" id="soundToggle" type="button" aria-pressed="true" aria-label="关闭提示音"></button><button class="notification-button" id="notificationButton" type="button" aria-label="暂无通知" disabled></button><div class="today" id="today" data-home-view></div></div></header>
     <div class="page-heading" data-home-view><h1 id="homeTitle">本月</h1><p class="intro" id="homeIntro">收入、目标和时间的月度记录。</p></div>
     <div class="month-control" data-home-view><button class="month-open" id="monthOpen" type="button" aria-expanded="false">2026年10月 <span>⌄</span></button><button class="payday-open" id="paydayOpen" type="button">发薪日：每月1日</button><div class="month-menu" id="monthMenu" hidden><div class="month-menu-row"><button id="monthPrev" type="button">← 上一年</button><input id="monthInput" type="month" aria-label="选择年月"><button id="monthNext" type="button">下一年 →</button></div><button class="month-apply" id="monthApply" type="button">查看这个月</button></div></div>
+    <div class="mode-control" data-home-view aria-label="收入模式"><div class="mode-segments"><button type="button" data-mode="commission" aria-pressed="true">提成模式</button><button type="button" data-mode="daily" aria-pressed="false">日薪模式</button></div></div>
     <section class="current" id="currentCard" data-home-view><img class="current-backdrop" id="currentBackdrop" alt="" hidden><div class="current-shade" aria-hidden="true"></div><div class="current-message" id="currentMessage" hidden></div><div class="current-info"><div class="current-label" id="currentLabel">本月累计</div><div class="amount" id="currentTotal">¥0</div><div class="month-name" id="currentMonth"></div></div><div class="current-card-tools"><button id="currentBackgroundOpen" type="button" aria-label="上传或更换背景图片">背景</button><button id="currentMessageOpen" type="button" aria-label="编辑置顶寄语">寄语</button><button id="currentExpand" type="button" aria-label="全屏展示金额和周期" aria-pressed="false">放大</button><input id="currentBackgroundFile" type="file" accept="image/*" hidden></div><img class="product-photo" id="productPhoto" alt="产品照片预览" hidden><button class="product-photo-clear" id="productPhotoClear" type="button" title="清除当前周期照片" aria-label="清除当前周期照片" hidden>×</button><div class="product-meta" id="productMeta" hidden><strong id="productName"></strong><span id="productReason"></span><small id="productNote"></small><div class="goal-guide"><span class="guide-face" aria-hidden="true"></span><span id="goalGuideText">正在为目标攒钱</span></div></div><div class="product-progress" id="productProgress" hidden><div class="progress-caption"><span id="progressAmounts"></span><strong id="progressPercent">0%</strong></div><div class="progress-track"><i id="progressFill"></i></div></div></section>
-    <div class="mode-control" data-home-view aria-label="收入模式"><div class="mode-segments"><button type="button" data-mode="daily" aria-pressed="false">日薪模式</button><button type="button" data-mode="commission" aria-pressed="true">提成模式</button></div></div>
     <section class="calendar" aria-label="日期信息" data-home-view>
       <div class="cal-card"><div class="cal-label">距离春节</div><div class="cal-value" id="springDays">— 天</div><div class="cal-hint" id="springDate"></div></div>
-      <div class="cal-card"><div class="cal-label">距离月底</div><div class="cal-value" id="monthDays">— 天</div><div class="cal-hint">本月结束</div></div>
-      <div class="cal-card"><div class="cal-label">距离发薪日</div><div class="cal-value" id="paydayDays">— 天</div><div class="cal-hint" id="paydayCountdownDate"></div></div>
+      <div class="calendar-secondary">
+        <div class="cal-row"><span class="cal-row-label">距离月底</span><strong class="cal-row-value" id="monthDays">— 天</strong></div>
+        <div class="cal-row"><span class="cal-row-label">距离发薪日</span><strong class="cal-row-value" id="paydayDays">— 天</strong><small id="paydayCountdownDate" hidden></small></div>
+      </div>
     </section>
     <details class="daily-settings" id="dailySettings" data-home-view><summary>日薪与工作时间设置</summary><div class="daily-settings-grid"><label for="dailyMonthlySalary">月薪（元）<input id="dailyMonthlySalary" type="number" min="0" step="0.01" inputmode="decimal" placeholder="填写月薪"></label><label for="dailyRestDays">每月休息天数<input id="dailyRestDays" type="number" min="0" max="30" step="1" inputmode="numeric"></label><label for="dailyWorkStart">上班时间<input id="dailyWorkStart" type="time" required></label><label for="dailyWorkEnd">下班时间<input id="dailyWorkEnd" type="time" required></label></div><label class="daily-rest-toggle" for="dailyIsRest"><input id="dailyIsRest" type="checkbox"> 今天是休息日，不累计日薪</label><p class="daily-settings-note">日薪按月薪 ÷（本月天数 − 每月休息天数）估算；工作时长按上班至下班的时间计算。</p></details>
+    <div class="quick-heading" data-home-view><h2>快速记一笔</h2><a href="#incomeHistorySection">全部类别</a></div>
     <section class="actions" aria-label="新增收入" data-home-view>
       <button class="action" data-kind="work" type="button"><div class="action-top"><span class="action-icon" aria-hidden="true"></span><span class="action-name">上班一天</span></div><div class="action-value">＋ ¥154</div></button>
       <button class="action" data-kind="shoot" type="button"><div class="action-top"><span class="action-icon" aria-hidden="true"></span><span class="action-name">拍摄提成</span></div><div class="action-value">＋ ¥100</div></button>
       <button class="action" data-kind="camera" type="button"><div class="action-top"><span class="action-icon" aria-hidden="true"></span><span class="action-name">出镜提成</span></div><div class="action-value">＋ ¥500</div></button>
     </section>
-    <section data-home-view id="incomeHistorySection"><div class="section"><h2>收入明细</h2><div class="list-tools"><small id="entryCount">本月 0 笔</small><a class="detail-link" href="#incomeHistorySection">查看明细</a><button class="export-button" id="exportOpen" type="button">导出</button></div></div><div id="history"></div></section>
+    <section data-home-view id="incomeHistorySection"><div class="section"><h2>最近记录</h2><div class="list-tools"><small id="entryCount">本月 0 笔</small><a class="detail-link" href="#incomeHistorySection">查看明细</a><button class="export-button" id="exportOpen" type="button">导出</button></div></div><div id="history"></div></section>
     <section class="daily-target-card" id="dailyTargetSection" data-home-view hidden><h2>想要的东西要工作多久？</h2><form id="dailyTargetForm" class="daily-target-form"><label for="dailyTargetName">想买什么<input id="dailyTargetName" maxlength="80" placeholder="例如：一台电脑" required></label><label for="dailyTargetAmount">大概金额（元）<input id="dailyTargetAmount" type="number" min="0.01" step="0.01" inputmode="decimal" placeholder="例如：8000" required></label><button type="submit">计算工作时长</button></form><div class="daily-target-result" id="dailyTargetResult" hidden><div class="daily-target-result-name" id="dailyTargetTitle"></div><strong class="daily-target-duration" id="dailyTargetDuration"></strong><p id="dailyTargetBasis"></p></div></section>
     <div class="foot" id="homeFoot" data-home-view>记录保存在当前浏览器；照片保存在本机浏览器数据库</div>
     <section class="page-view" id="consumptionPage" data-page="consumption" hidden>
@@ -546,7 +803,7 @@
       try{const legacy=JSON.parse(localStorage.getItem(GOAL_KEY)||'null');if(legacy&&!productGoals[current]){productGoals[current]=legacy;localStorage.setItem(GOALS_KEY,JSON.stringify(productGoals))}}catch{}
       productGoal=productGoals[current]||null;
       const escapeHTML=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-      $('today').textContent=`${Number(now.getMonth()+1)}月${now.getDate()}日`;$('currentMonth').textContent=`${year}年${Number(month)}月`;$('monthInput').value=current;$('monthOpen').innerHTML=`${year}年${Number(month)}月 <span>⌄</span>`;$('paydayOpen').textContent=`发薪日：每月${payDay}日`;
+      const englishMonths=['JAN','FEB','MAR','APR','MAY','JUN','JUL','AUG','SEP','OCT','NOV','DEC'];function renderCycleLabel(home=document.body.classList.contains('home-active')){$('today').textContent=home?`${englishMonths[Number(month)-1]} ${year} · CYCLE ${String(Number(month)).padStart(2,'0')}`:`${Number(now.getMonth()+1)}月${now.getDate()}日`}renderCycleLabel();$('currentMonth').textContent=`${year}年${Number(month)}月`;$('monthInput').value=current;$('monthOpen').innerHTML=`${year}年${Number(month)}月 <span>⌄</span>`;$('paydayOpen').textContent=`发薪日：每月${payDay}日`;
       function dateText(e){const d=new Date(e.time||Date.now());return `${d.getMonth()+1}月${d.getDate()}日 ${String(d.getHours()).padStart(2,'0')}:${String(d.getMinutes()).padStart(2,'0')}`}
       function openDB(){return new Promise((resolve,reject)=>{if(!('indexedDB'in window)){reject(new Error('当前浏览器不支持照片存储'));return}const req=indexedDB.open(PHOTO_DB,1);req.onupgradeneeded=()=>{if(!req.result.objectStoreNames.contains(PHOTO_STORE))req.result.createObjectStore(PHOTO_STORE)};req.onsuccess=()=>resolve(req.result);req.onerror=()=>reject(req.error)})}
       async function putPhoto(id,file){const db=await openDB();return new Promise((resolve,reject)=>{const tx=db.transaction(PHOTO_STORE,'readwrite');tx.objectStore(PHOTO_STORE).put(file,id);tx.oncomplete=()=>{db.close();window.PayrollBridge?.markPhotoChanged(String(id),false);resolve()};tx.onerror=()=>{db.close();reject(tx.error)}})}
@@ -564,7 +821,7 @@
       function openBackupPreview(backup,name){pendingBackup=backup;const summary=backupSummary(backup);$('backupPreviewFile').textContent=`文件：${name} · 导出时间：${summary.exportedAt}`;$('backupPreviewRecords').textContent=`${summary.records} 笔`;$('backupPreviewMonths').textContent=`${summary.months} 个`;$('backupPreviewTotal').textContent=money(summary.total);$('backupPreviewPhotos').textContent=`${summary.photos} 张`;$('backupPreviewWarning').textContent='恢复会替换本机当前的收入、设置和照片。确认后，薪序会先自动下载一份当前完整备份，再执行恢复。';$('backupPreviewOverlay').classList.add('open');$('backupPreviewOverlay').setAttribute('aria-hidden','false')}
       async function restoreBackup(backup){const oldLocal={};for(const key of BACKUP_KEYS)oldLocal[key]=localStorage.getItem(key);const oldPhotos=await readPhotoRecords();const incomingPhotos=await Promise.all(backup.data.photos.map(async photo=>{const blob=await dataUrlToBlob(photo.dataUrl),file=photo.name?new File([blob],photo.name,{type:photo.type||blob.type,lastModified:photo.lastModified||Date.now()}):blob;return{id:photo.id,blob:file}}));await replacePhotoRecords(incomingPhotos);try{for(const key of BACKUP_KEYS)localStorage.removeItem(key);for(const [key,value] of Object.entries(backup.data.localStorage))localStorage.setItem(key,value)}catch(error){for(const key of BACKUP_KEYS){localStorage.removeItem(key);if(oldLocal[key]!==null)localStorage.setItem(key,oldLocal[key])}await replacePhotoRecords(oldPhotos);throw error}}
       function productPhotoId(period=current){return `${GOAL_PHOTO_ID}:${period}`}
-      function updateGoalCard(total){productGoal=productGoals[current]||null;const has=!!productGoal&&Number(productGoal.amount)>0,hasPhoto=has&&!!productGoal.photoAttached&&!!goalPhotoUrl,card=$('currentCard');card.classList.toggle('has-goal',has);$('productPhoto').hidden=!hasPhoto;$('productPhotoClear').hidden=!hasPhoto;$('productMeta').hidden=!has;$('productProgress').hidden=!has;if(!has){$('productPhoto').removeAttribute('src');return}$('productName').textContent=productGoal.name||'产品目标';$('productReason').textContent=productGoal.reason||'';$('productNote').textContent=productGoal.note||'';const pct=total/Number(productGoal.amount)*100;$('progressAmounts').textContent=`周期收入 ${money(total)} / 产品金额 ${money(productGoal.amount)}`;$('progressPercent').textContent=`${pct.toLocaleString('zh-CN',{maximumFractionDigits:1})}%`;$('progressFill').style.width=Math.min(100,Math.max(0,pct))+'%';$('goalGuideText').textContent=pct>=100?`太棒了，${productGoal.name}已经攒够啦！`:total<=0?'记下一笔收入，开始为目标攒钱':`再攒 ${money(Number(productGoal.amount)-total)} 就能带走${productGoal.name}`;if(hasPhoto)$('productPhoto').src=goalPhotoUrl;else $('productPhoto').removeAttribute('src')}
+      function updateGoalCard(total){productGoal=productGoals[current]||null;const has=!!productGoal&&Number(productGoal.amount)>0,hasPhoto=has&&!!productGoal.photoAttached&&!!goalPhotoUrl,card=$('currentCard');card.classList.toggle('has-goal',has);$('productPhoto').hidden=!hasPhoto;$('productPhotoClear').hidden=!hasPhoto;$('productMeta').hidden=!has;$('productProgress').hidden=!has;if(!has){card.style.removeProperty('--goal-progress');$('productPhoto').removeAttribute('src');return}$('productName').textContent=productGoal.name||'产品目标';$('productReason').textContent=productGoal.reason||'';$('productNote').textContent=productGoal.note||'';const pct=total/Number(productGoal.amount)*100,progress=Math.min(100,Math.max(0,pct));card.style.setProperty('--goal-progress',progress+'%');$('progressAmounts').textContent=`周期收入 ${money(total)} / 产品金额 ${money(productGoal.amount)}`;$('progressPercent').textContent=`${pct.toLocaleString('zh-CN',{maximumFractionDigits:1})}%`;$('progressFill').style.width=progress+'%';$('goalGuideText').textContent=pct>=100?`太棒了，${productGoal.name}已经攒够啦！`:total<=0?'记下一笔收入，开始为目标攒钱':`再攒 ${money(Number(productGoal.amount)-total)} 就能带走${productGoal.name}`;if(hasPhoto)$('productPhoto').src=goalPhotoUrl;else $('productPhoto').removeAttribute('src')}
       async function loadGoalPhoto(){const period=current,goal=productGoals[period];if(goalPhotoUrl){URL.revokeObjectURL(goalPhotoUrl);goalPhotoUrl=''}if(!goal?.photoAttached){updateGoalCard(Number($('currentTotal').dataset.value||0));return}try{let blob=await getPhoto(productPhotoId(period));if(!blob&&period===current){blob=await getPhoto(GOAL_PHOTO_ID);if(blob&&period===current){await putPhoto(productPhotoId(period),blob);await removePhoto(GOAL_PHOTO_ID)}}if(!blob||period!==current)return;goalPhotoUrl=URL.createObjectURL(blob);updateGoalCard(Number($('currentTotal').dataset.value||0))}catch{}}
       let currentBackdropUrl='';
       function renderCurrentMessage(value=localStorage.getItem(CURRENT_MESSAGE_KEY)||''){const message=String(value).trim();$('currentMessage').textContent=message;$('currentMessage').hidden=!message;$('currentCard').classList.toggle('has-message',!!message)}
@@ -586,7 +843,7 @@
       function dailyPay(){const d=new Date(),days=daysInMonth(d.getFullYear(),d.getMonth()+1),workdays=Math.max(1,days-Math.min(dailySettings.restDays,days-1));return dailySettings.salary/workdays}
       function dailyAccrued(){const d=new Date(),date=localDateKey(d),{shift,elapsed}=dailyElapsed(d);if(dailyRestDate===date||dailySettings.salary<=0||current!==actualPeriod||shift.duration===86400000)return 0;return dailyPay()*Math.min(1,Math.max(0,elapsed/shift.duration))}
       function renderOdometer(value){const node=$('currentTotal'),next=moneyPrecise(value),previous=node.dataset.odometerText;if(previous===next)return;const fragment=document.createDocumentFragment();for(let i=0;i<next.length;i++){const char=next[i],oldChar=previous?.[i];if(/\d/.test(char)){const cell=document.createElement('span');cell.className='odometer-digit';if(oldChar&&/\d/.test(oldChar)&&oldChar!==char){const oldNode=document.createElement('span'),newNode=document.createElement('span');oldNode.className='odometer-old';oldNode.textContent=oldChar;newNode.className='odometer-new';newNode.textContent=char;cell.append(oldNode,newNode);fragment.append(cell);requestAnimationFrame(()=>{cell.classList.add('is-rolling');setTimeout(()=>{cell.className='odometer-digit odometer-static-digit';cell.textContent=char},420)})}else{cell.classList.add('odometer-static-digit');cell.textContent=char;fragment.append(cell)}}else{const symbol=document.createElement('span');symbol.textContent=char;fragment.append(symbol)}}node.replaceChildren(fragment);node.dataset.odometerText=next}
-      function renderDailyMode(){const daily=activeMode==='daily',card=$('currentCard'),actions=document.querySelector('.actions');card.classList.toggle('is-daily',daily);actions.classList.toggle('is-daily',daily);$('dailySettings').hidden=!daily;$('incomeHistorySection').hidden=daily;$('dailyTargetSection').hidden=!daily;$('homeFoot').hidden=daily;$('homeTitle').textContent=daily?'今日收入':'本月';$('homeIntro').textContent=daily?'按月薪和实际在岗时间，逐秒估算今天的日薪。':'收入、目标和时间的月度记录。';if(!daily){const range=periodRange(current);$('currentLabel').textContent=`${year}年${Number(month)}月收入累计`;$('currentTotal').textContent=money(currentIncomeTotal);delete $('currentTotal').dataset.odometerText;$('currentMonth').textContent=range.label;return}$('dailyMonthlySalary').value=dailySettings.salary||'';$('dailyRestDays').value=dailySettings.restDays;$('dailyWorkStart').value=dailySettings.start;$('dailyWorkEnd').value=dailySettings.end;$('dailyIsRest').checked=dailyRestDate===localDateKey(new Date());if(dailyTarget){$('dailyTargetName').value=dailyTarget.name;$('dailyTargetAmount').value=dailyTarget.amount;updateDailyTargetResult()}updateDailyDisplay()}
+      function renderDailyMode(){const daily=activeMode==='daily',card=$('currentCard'),actions=document.querySelector('.actions'),quickHeading=document.querySelector('.quick-heading');card.classList.toggle('is-daily',daily);actions.classList.toggle('is-daily',daily);quickHeading.hidden=daily;$('dailySettings').hidden=!daily;$('incomeHistorySection').hidden=daily;$('dailyTargetSection').hidden=!daily;$('homeFoot').hidden=daily;$('homeTitle').textContent=daily?'今日收入':'本月';$('homeIntro').textContent=daily?'按月薪和实际在岗时间，逐秒估算今天的日薪。':'收入、目标和时间的月度记录。';if(!daily){const range=periodRange(current),short=d=>`${String(d.getMonth()+1).padStart(2,'0')}.${String(d.getDate()).padStart(2,'0')}`;$('currentLabel').textContent=`${year}年${Number(month)}月收入累计`;$('currentTotal').textContent=money(currentIncomeTotal);delete $('currentTotal').dataset.odometerText;$('currentMonth').textContent=`${short(range.start)} — ${short(range.end)}`;return}$('dailyMonthlySalary').value=dailySettings.salary||'';$('dailyRestDays').value=dailySettings.restDays;$('dailyWorkStart').value=dailySettings.start;$('dailyWorkEnd').value=dailySettings.end;$('dailyIsRest').checked=dailyRestDate===localDateKey(new Date());if(dailyTarget){$('dailyTargetName').value=dailyTarget.name;$('dailyTargetAmount').value=dailyTarget.amount;updateDailyTargetResult()}updateDailyDisplay()}
       function updateDailyDisplay(){if(activeMode!=='daily')return;const d=new Date(),{shift,elapsed}=dailyElapsed(d),amount=dailyAccrued();$('currentLabel').textContent='今天累计日薪';renderOdometer(amount);if(dailySettings.salary<=0){$('currentMonth').textContent='展开「日薪与工作时间设置」，填写月薪后开始估算。';return}if(dailyRestDate===localDateKey(d)){$('currentMonth').textContent=`今天休息 · 预计日薪 ${moneyPrecise(dailyPay())}`;return}if(current!==actualPeriod){$('currentMonth').textContent='切回当前收入周期后，查看实时日薪估算。';return}if(shift.duration===86400000){$('currentMonth').textContent='上班和下班时间不能相同，请在设置里调整。';return}if(elapsed<0){$('currentMonth').textContent=`上班时间 ${dailySettings.start} · 预计日薪 ${moneyPrecise(dailyPay())}`;return}if(elapsed>=shift.duration){$('currentMonth').textContent=`今天工作时间已计满 · 预计日薪 ${moneyPrecise(dailyPay())}`;return}const minutes=Math.floor(Math.max(0,elapsed)/60000),hours=Math.floor(minutes/60),mins=minutes%60;$('currentMonth').textContent=`在岗 ${hours?hours+'小时':''}${mins}分钟 · 预计日薪 ${moneyPrecise(dailyPay())}`}
       function updateDailyTargetResult(){if(!dailyTarget||dailySettings.salary<=0){$('dailyTargetResult').hidden=true;return}const shift=dailyShift();if(shift.duration===86400000){$('dailyTargetResult').hidden=true;return}const dayHours=shift.duration/3600000,targetDays=dailyTarget.amount/dailyPay(),totalHours=targetDays*dayHours;let wholeDays=Math.floor(targetDays),leftMinutes=Math.round((targetDays-wholeDays)*dayHours*60);if(leftMinutes>=Math.round(dayHours*60)){wholeDays++;leftMinutes=0}let duration;if(wholeDays>0){const h=Math.floor(leftMinutes/60),m=leftMinutes%60;duration=`${wholeDays} 个工作日${h?` ${h} 小时`:''}${m?` ${m} 分钟`:''}`}else{const h=Math.floor(totalHours),m=Math.max(1,Math.round((totalHours-h)*60));duration=h?`${h} 小时 ${m} 分钟`:`${m} 分钟`}$('dailyTargetTitle').textContent=`购买「${dailyTarget.name}」需要`;$('dailyTargetDuration').textContent=duration;$('dailyTargetBasis').textContent=`按预计日薪 ${moneyPrecise(dailyPay())}、每天 ${dayHours} 小时计算，约 ${totalHours.toFixed(1)} 小时 / ${targetDays.toFixed(1)} 个工作日。`;$('dailyTargetResult').hidden=false}
       function updateCalendar(){const today=new Date(),dateKey=d=>Date.UTC(d.getFullYear(),d.getMonth(),d.getDate());const cny={2026:'2026-02-17',2027:'2027-02-06',2028:'2028-01-26',2029:'2029-02-13',2030:'2030-02-03',2031:'2031-01-23',2032:'2032-02-11',2033:'2033-01-31',2034:'2034-02-19',2035:'2035-02-08',2036:'2036-01-28',2037:'2037-02-15'};let spring=Object.values(cny).map(v=>new Date(v+'T00:00:00')).find(d=>dateKey(d)>=dateKey(today));if(!spring)spring=new Date(today.getFullYear()+1,1,6);$('springDays').textContent=Math.round((dateKey(spring)-dateKey(today))/86400000)+' 天';$('springDate').textContent=`${spring.getFullYear()}年${spring.getMonth()+1}月${spring.getDate()}日`;$('monthDays').textContent=Math.max(0,Math.round((Date.UTC(today.getFullYear(),today.getMonth()+1,1)-dateKey(today))/86400000)-1)+' 天';let payday=payDate(today.getFullYear(),today.getMonth()+1);if(dateKey(payday)<dateKey(today))payday=payDate(today.getFullYear(),today.getMonth()+2);const left=Math.round((dateKey(payday)-dateKey(today))/86400000);$('paydayDays').textContent=left===0?'今天':left+' 天';$('paydayCountdownDate').textContent=`${payday.getFullYear()}年${payday.getMonth()+1}月${payday.getDate()}日发薪`}
@@ -689,8 +946,9 @@
       function undoEntry(recordId){const index=entries.findIndex((e,i)=>(e.id||String(i))===recordId);if(index<0)return;const [entry]=entries.splice(index,1);if(entry.id){deletedRecords=deletedRecords.filter(d=>d.id!==entry.id);deletedRecords.push({id:entry.id,deletedAt:new Date().toISOString()});removePhoto(entry.id)}save();notify('已撤回这笔收入')}
       $('history').addEventListener('click',async ev=>{const toggle=ev.target.closest('[data-expand]');if(toggle){const panel=$(toggle.dataset.expand),open=toggle.getAttribute('aria-expanded')!=='true';toggle.setAttribute('aria-expanded',String(open));panel.classList.toggle('open',open);return}const edit=ev.target.closest('[data-edit]');if(edit){openEditDialog(edit.dataset.edit);return}const undo=ev.target.closest('[data-undo]');if(undo){undoEntry(undo.dataset.undo);return}const photo=ev.target.closest('[data-photo]');if(photo){try{const blob=await getPhoto(photo.dataset.photo);if(!blob){notify('找不到这张照片');return}const url=URL.createObjectURL(blob);$('photoFull').src=url;$('photoOverlay').classList.add('open');$('photoOverlay').dataset.url=url}catch{notify('照片暂时无法打开')}}});
       document.querySelectorAll('.action').forEach(button=>button.addEventListener('click',()=>{if(current!==actualPeriod){notify('当前正在查看历史收入周期，请切回当前周期后记录收入');return}playSound(button.dataset.kind);openDialog(button.dataset.kind)}));
+      $('newEntryFab').addEventListener('click',()=>{if(current!==actualPeriod){notify('当前正在查看历史收入周期，请切回当前周期后记录收入');return}openDialog(activeKind)});
       const modes={daily:'日薪模式',commission:'提成模式'};let activeMode=localStorage.getItem('salary-mode-v1')||'daily';function renderMode(){document.querySelectorAll('[data-mode]').forEach(btn=>btn.setAttribute('aria-pressed',String(btn.dataset.mode===activeMode)))}renderMode();document.querySelector('.mode-segments').addEventListener('click',ev=>{const choice=ev.target.closest('[data-mode]');if(!choice||choice.dataset.mode===activeMode)return;activeMode=choice.dataset.mode;localStorage.setItem('salary-mode-v1',activeMode);renderMode();renderDailyMode();notify(`已切换到${modes[activeMode]}`)});
-      function setSelectedMonth(value){if(!/^\d{4}-\d{2}$/.test(value))return;current=value;[year,month]=current.split('-');localStorage.setItem('salary-selected-month-v1',current);productGoal=productGoals[current]||null;$('monthInput').value=current;$('monthMenu').hidden=true;$('monthOpen').setAttribute('aria-expanded','false');render()}
+      function setSelectedMonth(value){if(!/^\d{4}-\d{2}$/.test(value))return;current=value;[year,month]=current.split('-');localStorage.setItem('salary-selected-month-v1',current);productGoal=productGoals[current]||null;$('monthInput').value=current;$('monthMenu').hidden=true;$('monthOpen').setAttribute('aria-expanded','false');renderCycleLabel();render()}
       $('monthOpen').addEventListener('click',()=>{const open=$('monthMenu').hidden;$('monthMenu').hidden=!open;$('monthOpen').setAttribute('aria-expanded',String(open));if(open)$('monthInput').value=current});$('monthApply').addEventListener('click',()=>{if(!$('monthInput').value){notify('请选择年月');return}setSelectedMonth($('monthInput').value)});$('monthPrev').addEventListener('click',()=>{const [y,m]=($('monthInput').value||current).split('-');setSelectedMonth(`${Number(y)-1}-${m}`)});$('monthNext').addEventListener('click',()=>{const [y,m]=($('monthInput').value||current).split('-');setSelectedMonth(`${Number(y)+1}-${m}`)});document.addEventListener('click',ev=>{if(!ev.target.closest('.month-control')){$('monthMenu').hidden=true;$('monthOpen').setAttribute('aria-expanded','false')}});
       $('paydayOpen').addEventListener('click',()=>{$('paydayInput').value=payDay;$('paydayOverlay').classList.add('open');$('paydayOverlay').setAttribute('aria-hidden','false')});function closePayday(){ $('paydayOverlay').classList.remove('open');$('paydayOverlay').setAttribute('aria-hidden','true') }$('paydayClose').addEventListener('click',closePayday);$('paydayCancel').addEventListener('click',closePayday);$('paydayOverlay').addEventListener('click',ev=>{if(ev.target===$('paydayOverlay'))closePayday()});$('paydayForm').addEventListener('submit',ev=>{ev.preventDefault();const value=Number($('paydayInput').value);if(!Number.isInteger(value)||value<1||value>31){notify('发薪日请填写1到31之间的日期');return}payDay=value;localStorage.setItem('salary-payday-v1',String(payDay));actualPeriod=periodKey(new Date());localStorage.setItem(LAST_ACTUAL_PERIOD_KEY,actualPeriod);current=actualPeriod;[year,month]=current.split('-');localStorage.setItem('salary-selected-month-v1',current);productGoal=productGoals[current]||null;closePayday();render();notify(`收入周期已按每月${payDay}日更新`) });
       function closeGoalDialog(){$('goalOverlay').classList.remove('open');$('goalOverlay').setAttribute('aria-hidden','true');goalPhotoFile=null}
@@ -705,7 +963,7 @@
       $('photoPicker').addEventListener('click',ev=>{if(ev.target.closest('#photoRemove'))return;$('entryPhoto').click()});$('photoPicker').addEventListener('keydown',ev=>{if(ev.key==='Enter'||ev.key===' '){ev.preventDefault();$('entryPhoto').click()}});$('entryPhoto').addEventListener('change',()=>{const file=$('entryPhoto').files?.[0];if(!file)return;if(!file.type.startsWith('image/')){notify('请选择图片文件');return}photoFile=file;if(previewUrl)URL.revokeObjectURL(previewUrl);previewUrl=URL.createObjectURL(file);$('photoPreview').src=previewUrl;$('photoPreview').hidden=false;$('photoRemove').hidden=false;$('photoTitle').textContent=file.name;$('photoHint').textContent='已添加照片，可点移除更换'});$('entryKind').addEventListener('change',()=>{const kind=$('entryKind').value;$('amountField').hidden=kind==='work';$('fixedField').hidden=kind!=='work';if(kind!=='work'&&!Number($('entryAmount').value))$('entryAmount').value=prices[kind]});
       $('photoRemove').addEventListener('click',ev=>{ev.stopPropagation();$('entryPhoto').value='';photoFile=null;clearPreview()});
       function closePhoto(){const overlay=$('photoOverlay'),url=overlay.dataset.url;if(url)URL.revokeObjectURL(url);overlay.dataset.url='';$('photoFull').removeAttribute('src');overlay.classList.remove('open')}$('photoClose').addEventListener('click',closePhoto);$('photoOverlay').addEventListener('click',ev=>{if(ev.target===$('photoOverlay'))closePhoto()});
-      function selectPage(page){document.querySelectorAll('[data-home-view]').forEach(node=>node.hidden=page!=='home');document.querySelectorAll('.page-view').forEach(node=>node.hidden=node.dataset.page!==page);document.querySelectorAll('[data-page-target]').forEach(button=>button.setAttribute('aria-selected',String(button.dataset.pageTarget===page)));if(page==='consumption')renderConsumption();if(page==='home')renderDailyMode()}
+      function selectPage(page){document.body.classList.toggle('home-active',page==='home');renderCycleLabel(page==='home');document.querySelectorAll('[data-home-view]').forEach(node=>node.hidden=page!=='home');document.querySelectorAll('.page-view').forEach(node=>node.hidden=node.dataset.page!==page);document.querySelectorAll('[data-page-target]').forEach(button=>button.setAttribute('aria-selected',String(button.dataset.pageTarget===page)));if(page==='consumption')renderConsumption();if(page==='home')renderDailyMode()}
       document.querySelector('.page-tabs').addEventListener('click',ev=>{const tab=ev.target.closest('[data-page-target]');if(tab)selectPage(tab.dataset.pageTarget)});
       renderSettingsActions();syncActionButtons();$('settingsForm').addEventListener('submit',ev=>{ev.preventDefault();const updated={};for(const kind of ['work','shoot','camera']){const name=$(`setting-name-${kind}`).value.trim(),amount=Number($(`setting-amount-${kind}`).value);if(!name||!Number.isFinite(amount)||amount<=0){notify('请填写有效的按钮名称和金额');return}updated[kind]={name,amount}}for(const kind of Object.keys(updated)){names[kind]=updated[kind].name;prices[kind]=updated[kind].amount}localStorage.setItem('salary-home-actions-v1',JSON.stringify(updated));syncActionButtons();notify('首页三个收入按钮已更新')});
       $('backupExport').addEventListener('click',async()=>{const button=$('backupExport');button.disabled=true;button.textContent='正在整理数据…';try{const backup=await buildBackup();downloadBackupFile(backup);notify(`完整备份已导出，包含 ${backup.data.photos.length} 张照片`)}catch(error){notify(`备份失败：${error.message||'无法读取本机数据'}`)}finally{button.disabled=false;button.textContent='导出完整备份'}});
@@ -758,7 +1016,7 @@ const benchmark=$('comfortBenchmark'),benchmarkMonth=$('medianUpdatedAt').value;
       function saveDailySettings(){dailySettings.salary=Math.max(0,Number($('dailyMonthlySalary').value)||0);dailySettings.restDays=Math.min(30,Math.max(0,Number($('dailyRestDays').value)||0));dailySettings.start=$('dailyWorkStart').value||'09:00';dailySettings.end=$('dailyWorkEnd').value||'18:00';localStorage.setItem(DAILY_KEY,JSON.stringify(dailySettings));updateDailyDisplay();updateDailyTargetResult()}
       ['dailyMonthlySalary','dailyRestDays','dailyWorkStart','dailyWorkEnd'].forEach(id=>{const input=$(id);input.addEventListener('input',saveDailySettings);input.addEventListener('change',saveDailySettings)});
       $('dailyIsRest').addEventListener('change',()=>{dailyRestDate=$('dailyIsRest').checked?localDateKey(new Date()):'';if(dailyRestDate)localStorage.setItem('salary-daily-rest-date-v1',dailyRestDate);else localStorage.removeItem('salary-daily-rest-date-v1');updateDailyDisplay()});
-      function refreshIncomePeriod(){const nextPeriod=periodKey(new Date());if(nextPeriod===actualPeriod)return;const previousPeriod=actualPeriod;actualPeriod=nextPeriod;localStorage.setItem(LAST_ACTUAL_PERIOD_KEY,actualPeriod);if(current===previousPeriod){current=actualPeriod;[year,month]=current.split('-');localStorage.setItem('salary-selected-month-v1',current);$('monthInput').value=current;render()}else updateDailyDisplay()}
+      function refreshIncomePeriod(){const nextPeriod=periodKey(new Date());if(nextPeriod===actualPeriod)return;const previousPeriod=actualPeriod;actualPeriod=nextPeriod;localStorage.setItem(LAST_ACTUAL_PERIOD_KEY,actualPeriod);if(current===previousPeriod){current=actualPeriod;[year,month]=current.split('-');localStorage.setItem('salary-selected-month-v1',current);$('monthInput').value=current;renderCycleLabel();render()}else updateDailyDisplay()}
       renderCurrentMessage();loadCurrentBackdrop();updateCalendar();render();renderDailyMode();selectPage('home');setInterval(()=>{const today=localDateKey(new Date());if(dailyRestDate&&dailyRestDate!==today){dailyRestDate='';localStorage.removeItem('salary-daily-rest-date-v1');$('dailyIsRest').checked=false}refreshIncomePeriod();updateDailyDisplay();updateCalendar()},1000);
       if('serviceWorker'in navigator&&/^https?:$/.test(location.protocol))navigator.serviceWorker.register('./service-worker.js').catch(()=>{});
     })();
