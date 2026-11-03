@@ -1,5 +1,5 @@
-const CACHE='xin-xu-static-v23';
-const FILES=['./薪序-薪资管理.html','./cloud-sync.js?v=signup-otp-2','./manifest.webmanifest','./icon-180.png','./icon-512.png'];
+const CACHE='xin-xu-static-v24';
+const FILES=['./薪序-薪资管理.html','./cloud-sync.js?v=signup-otp-3','./manifest.webmanifest','./icon-180.png','./icon-512.png'];
 self.addEventListener('install',event=>{
   event.waitUntil(caches.open(CACHE).then(cache=>cache.addAll(FILES)).then(()=>self.skipWaiting()));
 });
