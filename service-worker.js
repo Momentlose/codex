@@ -1,5 +1,5 @@
 const CACHE='xin-xu-static-v24';
-const FILES=['./薪序-薪资管理.html','./cloud-sync.js?v=signup-otp-3','./manifest.webmanifest','./icon-180.png','./icon-512.png'];
+const FILES=['./牛马费.html','./cloud-sync.js?v=signup-otp-3','./manifest.webmanifest','./icon-180.png','./icon-512.png'];
 self.addEventListener('install',event=>{
   event.waitUntil(caches.open(CACHE).then(cache=>cache.addAll(FILES)).then(()=>self.skipWaiting()));
 });
@@ -12,5 +12,5 @@ self.addEventListener('fetch',event=>{
   event.respondWith(fetch(request).then(response=>{
     if(response.ok)caches.open(CACHE).then(cache=>cache.put(request,response.clone()));
     return response;
-  }).catch(()=>caches.match(request).then(cached=>cached||caches.match('./薪序-薪资管理.html'))));
+  }).catch(()=>caches.match(request).then(cached=>cached||caches.match('./牛马费.html'))));
 });
