@@ -1,4 +1,4 @@
-const CACHE='xin-xu-static-v24';
+const CACHE='xin-xu-static-v25';
 const FILES=['./牛马费.html','./cloud-sync.js?v=signup-otp-3','./manifest.webmanifest','./icon-180.png','./icon-512.png'];
 self.addEventListener('install',event=>{
   event.waitUntil(caches.open(CACHE).then(cache=>cache.addAll(FILES)).then(()=>self.skipWaiting()));
