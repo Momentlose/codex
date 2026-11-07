@@ -5,7 +5,7 @@
   "description": "记录牛马费收入与产品目标",
   "lang": "zh-CN",
   "dir": "ltr",
-  "start_url": "./牛马费.html",
+  "start_url": "./niumafei.html",
   "scope": "./",
   "display": "standalone",
   "display_override": ["standalone", "minimal-ui"],
